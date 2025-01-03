@@ -1,0 +1,199 @@
+/*DEVELOP AN ONLINE LEARNING
+PLATFORM THAT SUPPORTS VIDEO
+LESSONS, QUIZZES, AND PROGRESS
+TRACKING*/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Learning Platform</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Main content area */
+        .content {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .video-section, .quiz-section, .progress-section {
+            width: 30%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #quiz {
+            margin-top: 20px;
+        }
+
+        #quiz-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #progressStatus {
+            font-size: 18px;
+            color: #27ae60;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .video-section, .quiz-section, .progress-section {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Online Learning Platform</h1>
+    </header>
+
+    <div class="content">
+        <div class="video-section">
+            <h2>Video Lessons</h2>
+            <video id="videoPlayer" controls>
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="markWatchedBtn">Mark as Watched</button>
+        </div>
+
+        <div class="quiz-section">
+            <h2>Quiz</h2>
+            <div id="quiz">
+                <p id="quiz-question"></p>
+                <form id="quiz-form">
+                    <label><input type="radio" name="answer" value="A"> Option A</label><br>
+                    <label><input type="radio" name="answer" value="B"> Option B</label><br>
+                    <label><input type="radio" name="answer" value="C"> Option C</label><br>
+                    <label><input type="radio" name="answer" value="D"> Option D</label><br>
+                    <button type="button" id="submitQuizBtn">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h2>Progress Tracking</h2>
+            <p id="progressStatus">You have completed: 0%</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const videoPlayer = document.getElementById("videoPlayer");
+        const markWatchedBtn = document.getElementById("markWatchedBtn");
+        const progressStatus = document.getElementById("progressStatus");
+        const quizQuestion = document.getElementById("quiz-question");
+        const submitQuizBtn = document.getElementById("submitQuizBtn");
+
+        // Progress tracking
+        let progress = 0;
+        const totalProgress = 2; // Total progress steps (video + quiz)
+
+        // Load saved progress from localStorage
+        if (localStorage.getItem("videoWatched") === "true") {
+            progress += 50;
+            updateProgress();
+        }
+
+        // Quiz data (for demonstration purposes)
+        const quiz = {
+            question: "What is the capital of France?",
+            options: ["Paris", "London", "Berlin", "Madrid"],
+            answer: "A"
+        };
+
+        // Set quiz question and options
+        function setQuiz() {
+            quizQuestion.textContent = quiz.question;
+            const options = document.querySelectorAll("form#quiz-form label");
+            options[0].textContent = `A) ${quiz.options[0]}`;
+            options[1].textContent = `B) ${quiz.options[1]}`;
+            options[2].textContent = `C) ${quiz.options[2]}`;
+            options[3].textContent = `D) ${quiz.options[3]}`;
+        }
+
+        // Handle marking video as watched
+        markWatchedBtn.addEventListener("click", () => {
+            localStorage.setItem("videoWatched", "true");
+            progress += 50;
+            updateProgress();
+        });
+
+        // Handle quiz submission
+        submitQuizBtn.addEventListener("click", () => {
+            const selectedAnswer = document.querySelector("input[name='answer']:checked");
+
+            if (!selectedAnswer) {
+                alert("Please select an answer.");
+                return;
+            }
+
+            if (selectedAnswer.value === quiz.answer) {
+                alert("Correct!");
+                progress += 50;
+                updateProgress();
+            } else {
+                alert("Incorrect! Try again.");
+            }
+        });
+
+        // Update progress display
+        function updateProgress() {
+            const percentage = (progress / totalProgress) * 100;
+            progressStatus.textContent = `You have completed: ${percentage}%`;
+        }
+
+        // Initialize the quiz on page load
+        setQuiz();
+    </script>
+
+</body>
+</html>
