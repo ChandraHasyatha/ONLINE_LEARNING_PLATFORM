@@ -4,6 +4,7 @@ DURATION:DEC 12,2024 TO JAN 12,2025
 DOMAIN:FRONTEND WEB DEVELOPMENT
 
 Project Overview: Online Learning Platform-
+![Screenshot 2025-01-03 230206](https://github.com/user-attachments/assets/063f08a9-a64a-4537-893d-d9401a7ad847)
 
 This Online Learning Platform allows users to engage in video-based learning, participate in quizzes to test their knowledge, and track their progress. The platform is designed to be simple, user-friendly, and interactive.
 
